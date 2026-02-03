@@ -29,7 +29,7 @@
 %            MILPE is an algorithm that effectively reconstructs the
 %            original governing equation of data. The purpose is to seek 
 %            a multivariate regression model (or multi-input--multi-output 
-%            function) which has extrapolation capability, in an ultimate form. 
+%            function) which has extrapolation capability, ultimately. 
 %            In order to have a sufficient regression capability, 
 %            the Hilbert space where the eigenvectors are extracted from 
 %            should be multidimensional linear.
@@ -68,5 +68,6 @@ end
 % Ux    =  Projection matrix on input  subspace    
 % Uy    =  Projection matrix on output subspace    
 % GEAM  =  Abb. of Governing Equation Approximated by MILPE (=Uy*Ux+)
+
 
 
