@@ -62,7 +62,6 @@
 te    =  0.001;                 % [s] simulation duration
 dt    =  0.000001;              % [s] time-step
 m     =  floor((te)/dt+1);      % number of snapshots
-tvec  =  [0:m-1]*dt;            % time vector
 
 
 %% 
@@ -125,6 +124,7 @@ GE       =  Uy*pinv(Ux);            % MILPE low-rank governing equation     (Uy*
 
 %% Verification
 GE
+
 
 
 
