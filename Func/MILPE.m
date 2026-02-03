@@ -67,5 +67,6 @@ end
 % nMe   =  Number of modes excluded               
 % Ux    =  Projection matrix on input  subspace    
 % Uy    =  Projection matrix on output subspace    
-% GEAM  =  Abb. of Governing Equation Approximated by MILPE
+% GEAM  =  Abb. of Governing Equation Approximated by MILPE (=Uy*Ux+)
+
 
