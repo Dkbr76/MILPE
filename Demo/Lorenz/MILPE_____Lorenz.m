@@ -117,13 +117,14 @@ end
 
 % MILPE 
 nX       =  5;                      % number of variables in input subspace 
-Ux       =  U(1:nX     , 1:nX);     % projection matrix on input subspace   (Ux)
-Uy       =  U(nX+1:end , 1:nX);     % projection matrix on output subspace  (Uy)
-GE       =  Uy*pinv(Ux);            % MILPE low-rank governing equation     (Uy*Ux+)
+Ux       =  U(1:nX     , 1:nX);     % projection matrix on input subspace      (Ux)
+Uy       =  U(nX+1:end , 1:nX);     % projection matrix on output subspace     (Uy)
+GEAM     =  Uy*pinv(Ux);            % governing equation approximated by MILPE (Uy*Ux+)
 
 
 %% Verification
-GE
+GEAM
+
 
 
 
