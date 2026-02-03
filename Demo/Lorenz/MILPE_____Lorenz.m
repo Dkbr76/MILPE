@@ -19,13 +19,13 @@
 %            Apr.2024
 %
 %
-%            Author info:    
+%            *Author info:    
 %            Dkbr(Dkbr76@gmail.com)
 %
-%            MILPE Preprint:
+%            *MILPE Preprint:
 %            https://www.researchgate.net/profile/Dk-Br   
 %           
-%            Description:
+%            *Description:
 %            MILPE is an algorithm that effectively reconstructs the
 %            original governing equation of data. The purpose is to seek 
 %            a multivariate regression model (or multi-input--multi-output 
@@ -34,7 +34,7 @@
 %            the Hilbert space where the eigenvectors are extracted from 
 %            should be multidimensional linear.
 %
-%            Keywords:
+%            *Keywords:
 %            #MILPE #SVD #LinearRepresentation 
 %            #SystemIdentification #ROM #Koopman
 %
@@ -124,6 +124,7 @@ GEAM     =  Uy*pinv(Ux);            % governing equation approximated by MILPE (
 
 %% Verification
 GEAM
+
 
 
 
