@@ -53,21 +53,22 @@
 %ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø%
 
 
-function GEAM = MILPE(Z,nX,nMe) 
+function UyUxP = MILPE(Z,nX,nMe) 
 
     [U, S, V] = svd(Z,'econ');
     Ux        = U(   1:nX  ,  1:nX-nMe);
     Uy        = U(nX+1:end ,  1:nX-nMe);
-    GEAM      = Uy*pinv(Ux);
+    UyUxP     = Uy*pinv(Ux);
 
 end
 
-% Z     =  Unified Solution space (Row: vars. Col: snapshots)
-% nX    =  Number of vars in input subspace        
-% nMe   =  Number of modes excluded               
-% Ux    =  Projection matrix on input  subspace    
-% Uy    =  Projection matrix on output subspace    
-% GEAM  =  Abb. of Governing Equation Approximated by MILPE (=Uy*Ux+)
+% Z      =  Unified Solution space (Row: vars. Col: snapshots)
+% nX     =  Number of vars in input subspace        
+% nMe    =  Number of modes excluded               
+% Ux     =  Projection matrix on input  subspace    
+% Uy     =  Projection matrix on output subspace    
+% UyUxP  =  Abb. of Governing Equation Approximated by MILPE (=Uy*Ux+)
+
 
 
 
