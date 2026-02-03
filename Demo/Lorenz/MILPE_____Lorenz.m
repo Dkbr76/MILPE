@@ -15,7 +15,7 @@
 %             \ \__\    \ \__\ \__\ \_______\ \__\    \ \_______\
 %              \|__|     \|__|\|__|\|_______|\|__|     \|_______|
 %                                                      
-%            MILPE - Lorenz 1963 Prediction (Dist)
+%            MILPE 
 %            Apr.2024
 %
 %
@@ -124,6 +124,7 @@ GEAM     =  Uy*pinv(Ux);            % governing equation approximated by MILPE (
 
 %% Verification
 GEAM
+
 
 
 
