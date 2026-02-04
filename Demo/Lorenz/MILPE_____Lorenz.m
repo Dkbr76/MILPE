@@ -62,6 +62,7 @@
 te    =  0.001;                 % [s] simulation duration
 dt    =  0.000001;              % [s] time-step
 m     =  floor((te)/dt+1);      % number of snapshots
+tvec  =  [0:m-1]*dt;            % time vector
 
 
 %% Lorenz 1963 simulation (orig) for eigenvector extraction
@@ -106,32 +107,20 @@ for it=1:m
 end
 
 
-%% MILPE
+%% MILPE 
 
 % SVD for eigenvector extraction
 [U, S, V] = svd(Z,'econ');
 
 % MILPE 
-nX       =  5;                      % number of variables in input subspace 
-Ux       =  U(1:nX     , 1:nX);     % projection matrix on input subspace      
-Uy       =  U(nX+1:end , 1:nX);     % projection matrix on output subspace     
-UyUxP    =  Uy*pinv(Ux);            % governing equation approximated by MILPE 
+nX       =  size(X,2);              % number of variables in input subspace 
+Ux       =  U(1:nX     , 1:nX);     % projection matrix on input subspace   
+Uy       =  U(nX+1:end , 1:nX);     % projection matrix on output subspace  
+UyUxP    =  Uy*pinv(Ux);            % MILPE low-rank governing equation (Uy*Ux+)
 
 
-%% Verification - Governing equation
+%% Verification 1 - Governing equation
 UyUxP
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
