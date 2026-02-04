@@ -56,7 +56,7 @@
 %ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø%
 
 
-%% 
+%% Preprocess
 
 % Controller (default)
 te    =  0.001;                 % [s] simulation duration
@@ -64,9 +64,7 @@ dt    =  0.000001;              % [s] time-step
 m     =  floor((te)/dt+1);      % number of snapshots
 
 
-%% 
-
-% Lorenz 1963 simulation (orig) for eigenvector extraction
+%% Lorenz 1963 simulation (orig) for eigenvector extraction
 
 % Initial Condition
 x   = -8;
@@ -108,9 +106,7 @@ for it=1:m
 end
 
 
-%% 
-
-% MILPE subroutine
+%% MILPE
 
 % SVD for eigenvector extraction
 [U, S, V] = svd(Z,'econ');
@@ -122,8 +118,9 @@ Uy       =  U(nX+1:end , 1:nX);     % projection matrix on output subspace
 UyUxP    =  Uy*pinv(Ux);            % governing equation approximated by MILPE 
 
 
-%% Verification
+%% Verification - Governing equation
 UyUxP
+
 
 
 
