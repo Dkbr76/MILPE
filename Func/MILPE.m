@@ -63,13 +63,14 @@ function UyUxP = MILPE(X,Y,nMe)
 
 end
 
-% X     =  Input Subspace           (Row: vars. Col: snapshots)
-% Y     =  Output Subspace          (Row: vars. Col: snapshots)
-% Z     =  Unified Solution space   (Row: vars. Col: snapshots)
+% X     =  Input subspace           (Row: vars. Col: snapshots)
+% Y     =  Output subspace          (Row: vars. Col: snapshots)
+% Z     =  Unified solution space   (Row: vars. Col: snapshots)
 % nX    =  Number of vars in input subspace        
 % nMe   =  Number of modes excluded               
 % Ux    =  Projection matrix on input subspace    
 % Uy    =  Projection matrix on output subspace    
 % UyUxP =  Governing Equation Approximated by MILPE
+
 
 
