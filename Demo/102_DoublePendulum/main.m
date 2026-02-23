@@ -56,7 +56,7 @@
 
 % Controller (default)
 te    =  3.0;                   % [s] simulation duration
-dt    =  0.000001;              % [s] time-step
+dt    =  0.00001;               % [s] time-step
 m     =  floor((te)/dt+1);      % number of snapshots
 AFLAG =  1;                     % Global/Local approach flag    
                                 % (1: Global, 2: Local)
@@ -171,6 +171,7 @@ U2yU2xP   =  U2y*pinv(U2x);
 
 U1yU1xP
 U2yU2xP
+
 
 
 
