@@ -14,44 +14,30 @@
 %             \ \__\    \ \__\ \__\ \_______\ \__\    \ \_______\
 %              \|__|     \|__|\|__|\|_______|\|__|     \|_______|
 %                                                      
-%            MILPE 
+%            MILPE GitHub-Dkbr76
+%
+%
+%
+%
+%
+%
+%
+%
+%
 %            Apr.2024
 %
-%
-%            *Author info:    
-%            Dkbr(Dkbr76@gmail.com)
-%
-%            *MILPE Preprint:
-%            https://www.researchgate.net/profile/Dk-Br   
-%           
-%            *Description:
-%            MILPE is an algorithm that effectively reconstructs the
-%            governing equation of data (UyUx+). The purpose is to seek 
-%            a multivariate regression model (or multi-input--multi-output 
-%            function) which has extrapolation capability, ultimately,
-%
-%            *Keywords:
-%            #MILPE #SVD #LinearRepresentation 
-%            #SystemIdentification #ROM #Koopman
+%            #MILPE #SVD #Koopman #ROM
+%            #SystemIdentification 
+%            #LinearRepresentation 
 %
 %
 %
 %
 %
-%
-
-%ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø%
-%                                                                     %
-%                                                                     %
-%                     (ex) MILPE as a Function                        %
-%                                                                     %
-%                                                                     %
-%ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø,¸,ø¤°º¤ø%
-
 
 function UyUxP = MILPE(X,Y,nMe) 
 
-    % Preprocess
+    % Pre
     Z         = [X;Y];
     nX        = size(X,1);
 
@@ -63,14 +49,16 @@ function UyUxP = MILPE(X,Y,nMe)
 
 end
 
-% X     =  Input subspace           (Row: vars. Col: snapshots)
-% Y     =  Output subspace          (Row: vars. Col: snapshots)
-% Z     =  Unified solution space   (Row: vars. Col: snapshots)
+
+% X     =  Input subspace   (Row: vars. Col: snapshots)
+% Y     =  Output subspace  (Row: vars. Col: snapshots)
+% Z     =  Unified space    (Row: vars. Col: snapshots)
 % nX    =  Number of vars in input subspace        
 % nMe   =  Number of modes excluded               
 % Ux    =  Projection matrix on input subspace    
 % Uy    =  Projection matrix on output subspace    
-% UyUxP =  Governing Equation Approximated by MILPE
+% UyUxP =  Approx. Governing Equation
+
 
 
 
