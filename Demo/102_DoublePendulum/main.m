@@ -14,26 +14,21 @@
 %             \ \__\    \ \__\ \__\ \_______\ \__\    \ \_______\
 %              \|__|     \|__|\|__|\|_______|\|__|     \|_______|
 %                                                      
-%            MILPE 
+%            MILPE GitHub-Dkbr76
+%
+%
+%
+%
+%
+%
+%
+%
+%
 %            Apr.2024
 %
-%
-%            *Author info:    
-%            Dkbr(Dkbr76@gmail.com)
-%
-%            *MILPE Preprint:
-%            https://www.researchgate.net/profile/Dk-Br   
-%           
-%            *Description:
-%            MILPE is an algorithm that effectively reconstructs the
-%            governing equation of data (UyUx+). The purpose is to seek 
-%            a multivariate regression model (or multi-input--multi-output 
-%            function) which has extrapolation capability, ultimately,
-%
-%            *Keywords:
-%            #MILPE #SVD #LinearRepresentation 
-%            #SystemIdentification #ROM #Koopman
-%
+%            #MILPE #SVD #Koopman #ROM
+%            #SystemIdentification 
+%            #LinearRepresentation 
 %
 %
 %
@@ -171,6 +166,7 @@ U2yU2xP   =  U2y*pinv(U2x);
 
 U1yU1xP
 U2yU2xP
+
 
 
 
