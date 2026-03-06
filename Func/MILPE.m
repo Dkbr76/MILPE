@@ -1,4 +1,3 @@
-
 %
 %                             
 %          _____ ______   ___  ___       ________  _______        
@@ -11,8 +10,6 @@
 %                               GitHub Dkbr76
 %
 %
-
-
 
 function UyUxP = MILPE(X,Y,nMe) 
 
@@ -29,6 +26,8 @@ function UyUxP = MILPE(X,Y,nMe)
 end
 
 
+
+
 % X     =  Input subspace   (Row: vars. Col: snapshots)
 % Y     =  Output subspace  (Row: vars. Col: snapshots)
 % Z     =  Unified space    (Row: vars. Col: snapshots)
@@ -38,6 +37,7 @@ end
 % Ux    =  Projection matrix on input subspace    
 % Uy    =  Projection matrix on output subspace    
 % UyUxP =  Approx. Governing Equation 
+
 
 
 
