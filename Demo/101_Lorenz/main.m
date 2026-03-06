@@ -14,25 +14,19 @@
 %             \ \__\    \ \__\ \__\ \_______\ \__\    \ \_______\
 %              \|__|     \|__|\|__|\|_______|\|__|     \|_______|
 %                                                      
-%            MILPE 
-%            Apr.2024
+%            MILPE Apr.2024 (GitHub-Dkbr76)
 %
-%
-%            *Author info:    
-%            Dkbr(Dkbr76@gmail.com)
-%
-%            *MILPE Preprint:
-%            https://www.researchgate.net/profile/Dk-Br   
-%           
-%            *Description:
-%            MILPE is an algorithm that effectively reconstructs the
+%            An algorithm that effectively reconstructs the
 %            governing equation of data (UyUx+). The purpose is to seek 
 %            a multivariate regression model (or multi-input--multi-output 
 %            function) which has extrapolation capability, ultimately,
 %
-%            *Keywords:
-%            #MILPE #SVD #LinearRepresentation 
-%            #SystemIdentification #ROM #Koopman
+%            #MILPE #SVD #Koopman #ROM
+%            #SystemIdentification 
+%            #LinearRepresentation 
+%
+%
+%
 %
 %
 %
@@ -116,6 +110,7 @@ UyUxP    =  Uy*pinv(Ux);            % MILPE low-rank governing equation (Uy*Ux+)
 
 %% Verification 1 - Governing equation
 UyUxP
+
 
 
 
