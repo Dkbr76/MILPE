@@ -11,7 +11,7 @@
 %                               GitHub Dkbr76
 %
 %
-%
+
 
 
 function UyUxP = MILPE(X,Y,nMe) 
@@ -38,6 +38,7 @@ end
 % Ux    =  Projection matrix on input subspace    
 % Uy    =  Projection matrix on output subspace    
 % UyUxP =  Approx. Governing Equation 
+
 
 
 
