@@ -14,25 +14,21 @@
 %             \ \__\    \ \__\ \__\ \_______\ \__\    \ \_______\
 %              \|__|     \|__|\|__|\|_______|\|__|     \|_______|
 %                                                      
-%            MILPE Apr.2024 GitHub-Dkbr76
-%
-%
-%            An algorithm that effectively reconstructs the
-%            governing equation of data (UyUx+). 
+%            MILPE GitHub-Dkbr76
 %
 %
 %
 %
 %
 %
+%
+%
+%
+%            Apr.2024
 %
 %            #MILPE #SVD #Koopman #ROM
 %            #SystemIdentification 
 %            #LinearRepresentation 
-%
-%
-%
-%
 %
 %
 %
@@ -115,6 +111,7 @@ UyUxP    =  Uy*pinv(Ux);            % MILPE low-rank governing equation (Uy*Ux+)
 
 %% Verification 1 - Governing equation
 UyUxP
+
 
 
 
