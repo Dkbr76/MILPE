@@ -52,13 +52,13 @@ for it=1:m
     z = z + w*dt;
 
     % store snapshot info
-    R = [it*dt x y z u v w];
+    R = [it*dt x y z u v w]';
 
     % init R0 at it==1
-    if ( it == 1 ) R0 = zeros(size(R,2),m); end
+    if ( it == 1 ) R0 = zeros(size(R,1),m); end
 
     % save as time-history
-    R0(:,it) = R';
+    R0(:,it) = R;
 
 end
 
@@ -134,13 +134,13 @@ for it=1:m
     z = z + w*dt;
 
     % store snapshot info
-    R = [it*dt x y z u v w];
+    R = [it*dt x y z u v w]';
 
     % init R0 at it==1
-    if ( it == 1 ) R1 = zeros(size(R,2),m); end
+    if ( it == 1 ) R1 = zeros(size(R,1),m); end
 
     % save as time-history
-    R1(:,it) = R';
+    R1(:,it) = R;
 
 end
 
@@ -184,13 +184,13 @@ for it=1:m
     z = z + w*dt;
 
     % store snapshot info
-    R = [it*dt x y z u v w];
+    R = [it*dt x y z u v w]';
 
     % init R0 at it==1
-    if ( it == 1 ) R2 = zeros(size(R,2),m); end
+    if ( it == 1 ) R2 = zeros(size(R,1),m); end
 
     % save as time-history
-    R2(:,it) = R';
+    R2(:,it) = R;
 
 end
 
