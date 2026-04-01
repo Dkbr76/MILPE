@@ -17,7 +17,7 @@ clear all; close all;
 
 
 
-%% Orig Lorenz simulation 
+%% OG Lorenz simulation 
 % purpose: data aquisition for the eigenvector extraction
 
 
@@ -101,7 +101,7 @@ UyUxP    =  Uy*pinv(Ux);            % MILPE low-rank governing equation (Uy*Ux+)
 
 
 
-%% Orig Lorenz simulation 
+%% OG Lorenz simulation 
 % purpose: Simulate Lorenz longer time for the comparison against MILPE prediction
 
 
@@ -205,7 +205,7 @@ end
 %% Verification 1 - governing equation and NRMSE
 
 
-% original governing equation
+% OG governing equation
 A = [ -10  10   0   0   0; 
        28  -1   0  -1   0;
         0   0 -8/3  0   1 ]
@@ -230,7 +230,7 @@ NRMSE = NUMER/DENOM
 
 % time history - trajectory
 figure(1)
-plot3(R1(2,:),R1(3,:),R1(4,:),'k'); hold on; % original
+plot3(R1(2,:),R1(3,:),R1(4,:),'k'); hold on; % OG
 plot3(R2(2,:),R2(3,:),R2(4,:),'r');          % MILPE
 xlabel('x');
 ylabel('y');
@@ -238,21 +238,21 @@ zlabel('z');
 
 % time history - x-position
 figure(11)
-plot(R1(1,:),R1(2,:),'k'); hold on; % original
+plot(R1(1,:),R1(2,:),'k'); hold on; % OG
 plot(R2(1,:),R2(2,:),'r');          % MILPE
 xlabel('t');
 ylabel('x');
 
 % time history - y-position
 figure(12)
-plot(R1(1,:),R1(3,:),'k'); hold on; % original
+plot(R1(1,:),R1(3,:),'k'); hold on; % OG
 plot(R2(1,:),R2(3,:),'r');          % MILPE
 xlabel('t');
 ylabel('y');
 
 % time history - z-position
 figure(13)
-plot(R1(1,:),R1(4,:),'k'); hold on; % original
+plot(R1(1,:),R1(4,:),'k'); hold on; % OG
 plot(R2(1,:),R2(4,:),'r');          % MILPE
 xlabel('t');
 ylabel('z');
