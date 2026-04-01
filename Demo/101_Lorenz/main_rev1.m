@@ -121,7 +121,6 @@ L2    =   8/3;                    % beta
 L3    =    28;                    % rho
 
 % time-loop
-R1 = [];                          % init R matrix 
 for it=1:m
 
     % echo
