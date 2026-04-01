@@ -7,7 +7,7 @@
 
 
 
-% MILPE demo - Lorenz 1963 Prediction 
+% MILPE demo - Data-driven Lorenz 1963 Prediction 
 % Apr.2026
 
 clear all; close all;
