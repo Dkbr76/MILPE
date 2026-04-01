@@ -17,9 +17,8 @@ clear all; close all;
 
 
 
-%% OG Lorenz simulation 
+%% OG Lorenz simulation 1
 % purpose: data aquisition for the eigenvector extraction
-
 
 % controller 
 te    =    1.0;                   % [s] simulation duration
@@ -70,7 +69,6 @@ end
 %% MILPE algorithm
 % purpose: extract eigenvectors and construct approximated governing equation
 
-
 % var alloc (committed overwriting var names)
 x = R0(2,:);
 y = R0(3,:);
@@ -101,9 +99,8 @@ UyUxP    =  Uy*pinv(Ux);            % MILPE low-rank governing equation (Uy*Ux+)
 
 
 
-%% OG Lorenz simulation 
+%% OG Lorenz simulation 2
 % purpose: Simulate Lorenz longer time for the comparison against MILPE prediction
-
 
 % controller 
 te    =    10;                    % [s] simulation duration
@@ -203,7 +200,6 @@ end
 
 %% Verification 1 - governing equation and NRMSE
 
-
 % OG governing equation
 A = [ -10  10   0   0   0; 
        28  -1   0  -1   0;
@@ -225,7 +221,6 @@ NRMSE = NUMER/DENOM
 
 
 %% Verification 2 - time history comparison
-
 
 % time history - trajectory
 figure(1)
