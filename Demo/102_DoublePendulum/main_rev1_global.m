@@ -16,7 +16,6 @@ clear all; close all;
 
 
 
-
 %% OG Double-pendulum simulation 1
 % purpose: data aquisition for the eigenvector extraction
 % reference: Shinbrot et al. Chaos in a double pendulum. Am. J. Phys. 1992, 60, 491–499
