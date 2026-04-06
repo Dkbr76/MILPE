@@ -254,6 +254,7 @@ plot(R1(2,:),R1(3,:),'k'); hold on; % OG
 plot(R2(2,:),R2(3,:),'r');          % MILPE
 xlabel('t1');
 ylabel('t2');
+legend("OG","MILPE");
 
 % time history - theta1
 figure(11)
@@ -261,6 +262,7 @@ plot(R1(1,:),R1(2,:),'k'); hold on; % OG
 plot(R2(1,:),R2(2,:),'r');          % MILPE
 xlabel('t');
 ylabel('t1');
+legend("OG","MILPE");
 
 % time history - theta2
 figure(12)
@@ -268,7 +270,7 @@ plot(R1(1,:),R1(3,:),'k'); hold on; % OG
 plot(R2(1,:),R2(3,:),'r');          % MILPE
 xlabel('t');
 ylabel('t2');
-
+legend("OG","MILPE");
 
 
 
