@@ -16,6 +16,7 @@ clear all; close all;
 
 
 
+
 %% OG Double-pendulum simulation 1
 % purpose: data aquisition for the eigenvector extraction
 % reference: Shinbrot et al. Chaos in a double pendulum. Am. J. Phys. 1992, 60, 491–499
@@ -300,6 +301,7 @@ plot(R2(2,:)*r2d,R2(3,:)*r2d,'r');          % MILPE
 title("trajectory"); axis equal;
 xlabel('\theta_1(deg)');
 ylabel('\theta_2(deg)');
+legend("OG","MILPE");
 
 % time history - theta1
 figure(11)
@@ -308,6 +310,7 @@ plot(R2(1,:),R2(2,:)*r2d,'r');          % MILPE
 title("time history of \theta_1");
 xlabel('t(s)');
 ylabel('\theta_1(deg)');
+legend("OG","MILPE");
 
 % time history - theta2
 figure(12)
@@ -316,6 +319,7 @@ plot(R2(1,:),R2(3,:)*r2d,'r');          % MILPE
 title("time history of \theta_2");
 xlabel('t(s)');
 ylabel('\theta_2(deg)');
+legend("OG","MILPE");
 
 
 
