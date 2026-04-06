@@ -296,27 +296,27 @@ U2yU2xP
 
 % time history - trajectory
 figure(1)
-plot(R1(2,:),R1(3,:),'k'); hold on; % OG
-plot(R2(2,:),R2(3,:),'r');          % MILPE
-xlabel('t1');
-ylabel('t2');
-legend("OG","MILPE");
+plot(R1(2,:)*r2d,R1(3,:)*r2d,'k'); hold on; % OG
+plot(R2(2,:)*r2d,R2(3,:)*r2d,'r');          % MILPE
+title("trajectory"); axis equal;
+xlabel('\theta_1(deg)');
+ylabel('\theta_2(deg)');
 
 % time history - theta1
 figure(11)
-plot(R1(1,:),R1(2,:),'k'); hold on; % OG
-plot(R2(1,:),R2(2,:),'r');          % MILPE
-xlabel('t');
-ylabel('t1');
-legend("OG","MILPE");
+plot(R1(1,:),R1(2,:)*r2d,'k'); hold on; % OG
+plot(R2(1,:),R2(2,:)*r2d,'r');          % MILPE
+title("time history of \theta_1");
+xlabel('t(s)');
+ylabel('\theta_1(deg)');
 
 % time history - theta2
 figure(12)
-plot(R1(1,:),R1(3,:),'k'); hold on; % OG
-plot(R2(1,:),R2(3,:),'r');          % MILPE
-xlabel('t');
-ylabel('t2');
-legend("OG","MILPE");
+plot(R1(1,:),R1(3,:)*r2d,'k'); hold on; % OG
+plot(R2(1,:),R2(3,:)*r2d,'r');          % MILPE
+title("time history of \theta_2");
+xlabel('t(s)');
+ylabel('\theta_2(deg)');
 
 
 
