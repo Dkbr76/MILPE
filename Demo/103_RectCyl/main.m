@@ -10,8 +10,7 @@
 % MILPE demo - CFD Pressure field regression and prediction 
 % Mar.2026 https://www.mdpi.com/3762868
 % YouTube: 
-https://www.youtube.com/watch?v=gvJTZSLJ0lc
-https://www.youtube.com/watch?v=Oc1LzhAe6wk
+% https://www.youtube.com/watch?v=gvJTZSLJ0lc
 
 clear all; close all;
 
