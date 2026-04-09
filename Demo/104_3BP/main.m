@@ -216,7 +216,7 @@ end
 
 
 %% OG 3BP simulation 2
-% purpose: Simulate Lorenz longer time for the comparison against MILPE prediction
+% purpose: Simulate 3BP longer time for the comparison against MILPE prediction
 
 % controller 
 te    =    50.0;                  % [s] simulation duration
@@ -287,7 +287,7 @@ end
 
 
 %% MILPE prediction
-% purpose: Predict Lorenz with approximated governing equation
+% purpose: Predict 3BP with approximated governing equation
 
 % controller 
 te    =    50.0;                  % [s] simulation duration
