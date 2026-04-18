@@ -1,1 +1,23 @@
 
+MILPE demo #105 - Data-driven Riemann Zeta Function
+
+s = 0.5 + i*t;
+z = zeta(s);
+x = real(z);
+y = imag(z);
+
+Consider RZF trajectory as function of t (where t stands for imaginary part in euler space)
+and get derivative of x and y respect to t.
+
+for i=1:m-1
+   u(i) = (x(i+1)-x(i))/dt;
+   v(i) = (y(i+1)-y(i))/dt;
+end
+
+Then find the approx dynamic system that uses inputs x, y and their H.O.T and outputs u, v.
+
+Current status
+- extracting eigenvectors and thus approx GE seems to stable when shorter amount of RZF data is used (but never knows)
+- the MILPE prediction can't exceed more than 5 sec before divergence. The accuracy during t<5 is good. Basis are [x y xy xxy] for both u and v.
+- need to find correct Hilbert space. Lacking module.
+- also need to consider how sensitive to dt (delta t). currently using 1e-4 and 1e-5 and testing 1e-6
