@@ -16,7 +16,7 @@ FOGS = 0;       % switch for OG sim
 FMLP = 1;       % switch for MILPE sim
 SRID = 25;      % id-sav for OG sim
 LRID = 25;      % id-load for MILPE sim 
-LPID = 105;     % id-post for OG and MILPE comparison
+LPID = 25;     % id-post for OG and MILPE comparison
 
 
 %% OG RZF simulation 
