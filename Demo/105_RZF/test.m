@@ -14,9 +14,9 @@ clear all; close all;
 
 FOGS = 0;       % switch for OG sim
 FMLP = 1;       % switch for MILPE sim
-SRID = 10;      % id-sav for OG sim
-LRID = 10;      % id-load  
-LPID = 100;      % id-post
+SRID = 25;      % id-sav for OG sim
+LRID = 25;      % id-load for MILPE sim 
+LPID = 105;     % id-post for OG and MILPE comparison
 
 
 %% OG RZF simulation 
@@ -26,18 +26,24 @@ LPID = 100;      % id-post
 if( FOGS == 1 )
 
 % controller
-te    =    3;                     % [s] simulation duration
-dt    =    1e-6;                  % [s] time-step
+te    =    2;                     % [s] simulation duration
+dt    =    1e-5;                  % [s] time-step
 m     =    floor((te)/dt+1);      % number of snapshots
 t     =    [0:m-1]*dt;
 
 % Riemann Zeta Function
-s     =    0.5 + i*t;
-z     =    zeta(s);
-x     =    real(z); 
-y     =    imag(z);
+s     =    0.5 + i*(t+12);
+z     =    zeros(1,m);
+x     =    zeros(1,m);
+y     =    zeros(1,m);
+for it=1:m
+    if ( mod(it,100) == 0 ) disp(it); end % echo
+    z(it) =  zeta(s(it));
+    x(it) =  real(z(it)); 
+    y(it) =  imag(z(it));
+end
 
-% derivatives
+% 1st derivatives
 for i=1:m-1
     u(i) = (x(i+1)-x(i))/dt;
     v(i) = (y(i+1)-y(i))/dt;
@@ -47,10 +53,6 @@ v(m) = v(m-1);
 
 % sav time-history
 TH1 = [t;x;y;u;v];
-
-% sav init cond (for later use)
-x0    =    x(1);
-y0    =    y(1);
 
 % sav mat
 save(SRID+".mat","TH1");
@@ -75,9 +77,11 @@ v  = TH1(5,:);
 
 % input subspace X1
 X1 = [x; y; x.*y; x.*x.*y; x.*x.*x];
+% X1 = [x; y; x.*y; x.*x.*y; x.*x.*x; x.*x.*x.*y; x.*y.*y.*y; x.*x.*y.*y];
 
 % input subspace X2
 X2 = [x; y; x.*y; x.*x.*y; x.*x.*x];
+% X2 = [x; y; x.*y; x.*x.*y; x.*x.*x; x.*x.*x.*y; x.*y.*y.*y; x.*x.*y.*y];
 
 % output subspace Y1
 Y1 = [u];
@@ -110,8 +114,8 @@ U2yU2xP  =  U2y*pinv(U2x)
 % purpose: Predict RZF with approximated governing equation
 
 % controller
-te    =    15;                    % [s] simulation duration
-dt    =    1e-4;                  % [s] time-step
+te    =    5;                    % [s] simulation duration
+dt    =    1e-3;                  % [s] time-step
 m     =    floor((te)/dt+1);      % number of snapshots
 t     =    [0:m-1]*dt;
 
@@ -126,10 +130,12 @@ for it=1:m
     if ( mod(it,100000) == 0 ) disp(it);  end
 
     % input snapshot X1
-    X1 = [x y x*y x*x*y x^3];
+    X1 = [x y x*y x^2*y x^3];
+%     X1 = [x y x*y x^2*y x^3 x^3*y x*y^3 x^2*y^2];
     
     % input snapshot X2
-    X2 = [x y x*y x*x*y x^3];
+    X2 = [x y x*y x^2*y x^3];
+%     X2 = [x y x*y x^2*y x^3 x^3*y x*y^3 x^2*y^2];
 
     % output snapshot Y1
     u = U1yU1xP * X1';
@@ -164,10 +170,10 @@ plot(TH1(2,:),TH1(3,:),'k'); hold on; % OG
 plot(TH2(2,:),TH2(3,:),'r');          % MILPE
 
 figure(2); 
-subplot(2,2,1); plot(TH1(1,:),TH1(2,:),'k'); hold on; plot(TH2(1,:),TH2(2,:),'r--'); title("x"); legend("OG","MILPE"); xlim([0,6]);
-subplot(2,2,2); plot(TH1(1,:),TH1(3,:),'k'); hold on; plot(TH2(1,:),TH2(3,:),'r--'); title("y"); legend("OG","MILPE"); xlim([0,6]);
-subplot(2,2,3); plot(TH1(1,:),TH1(4,:),'k'); hold on; plot(TH2(1,:),TH2(4,:),'r--'); title("u"); legend("OG","MILPE"); xlim([0,6]);
-subplot(2,2,4); plot(TH1(1,:),TH1(5,:),'k'); hold on; plot(TH2(1,:),TH2(5,:),'r--'); title("v"); legend("OG","MILPE"); xlim([0,6]);
+subplot(2,2,1); plot(TH1(1,:),TH1(2,:),'k'); hold on; plot(TH2(1,:),TH2(2,:),'r--'); title("x"); legend("OG","MILPE"); %xlim([0,3]);
+subplot(2,2,2); plot(TH1(1,:),TH1(3,:),'k'); hold on; plot(TH2(1,:),TH2(3,:),'r--'); title("y"); legend("OG","MILPE"); %xlim([0,3]);
+subplot(2,2,3); plot(TH1(1,:),TH1(4,:),'k'); hold on; plot(TH2(1,:),TH2(4,:),'r--'); title("u"); legend("OG","MILPE"); %xlim([0,3]);
+subplot(2,2,4); plot(TH1(1,:),TH1(5,:),'k'); hold on; plot(TH2(1,:),TH2(5,:),'r--'); title("v"); legend("OG","MILPE"); %xlim([0,3]);
 
 
 end % FMLP
