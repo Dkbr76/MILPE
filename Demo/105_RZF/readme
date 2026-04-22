@@ -20,4 +20,5 @@ Current status
 - extracting eigenvectors and thus approx GE seems to stable when shorter amount of RZF data is used (but never knows)
 - the MILPE prediction can't exceed more than 5 sec before divergence. The accuracy during t<5 is good. Basis are [x y xy xxy] for both u and v.
 - need to find correct Hilbert space. Lacking module.
-- also need to consider how sensitive to dt (delta t). currently using 1e-4 and 1e-5 and testing 1e-6
+- also need to consider how sensitive to dt (delta t). currently using 1e-4 and 1e-5 and testing 1e-6 -> 1e-5 seems okay
+- 0<t<12 seems transitional, so better truncate
