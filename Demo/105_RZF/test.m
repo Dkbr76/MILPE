@@ -12,11 +12,14 @@
 
 clear all; close all;
 
+% switches
 FOGS = 0;       % switch for OG sim
 FMLP = 1;       % switch for MILPE sim
-SRID = 25;      % id-sav for OG sim
-LRID = 25;      % id-load for MILPE sim 
-LPID = 25;     % id-post for OG and MILPE comparison
+
+% ids
+SRID = 104;     % id-sav for OG sim
+LRID = 104;     % id-load for MILPE sim 
+LPID = 104;     % id-post for OG and MILPE comparison
 
 
 %% OG RZF simulation 
@@ -26,33 +29,25 @@ LPID = 25;     % id-post for OG and MILPE comparison
 if( FOGS == 1 )
 
 % controller
-te    =    2;                     % [s] simulation duration
-dt    =    1e-5;                  % [s] time-step
-m     =    floor((te)/dt+1);      % number of snapshots
+te    =    10;                       % [s] simulation duration
+dt    =    1e-4;                    % [s] time-step
+m     =    floor((te)/dt+1);        % number of snapshots
 t     =    [0:m-1]*dt;
 
 % Riemann Zeta Function
-s     =    0.5 + i*(t+12);
+s     =    0.5 + i*(t+12);          % truncated t<12
 z     =    zeros(1,m);
 x     =    zeros(1,m);
 y     =    zeros(1,m);
-for it=1:m
+for it=1:m % running m times of zeta per each s is faster than putting m size s at once
     if ( mod(it,100) == 0 ) disp(it); end % echo
     z(it) =  zeta(s(it));
     x(it) =  real(z(it)); 
     y(it) =  imag(z(it));
 end
 
-% 1st derivatives
-for i=1:m-1
-    u(i) = (x(i+1)-x(i))/dt;
-    v(i) = (y(i+1)-y(i))/dt;
-end
-u(m) = u(m-1);
-v(m) = v(m-1);
-
 % sav time-history
-TH1 = [t;x;y;u;v];
+TH1 = [t;x;y];
 
 % sav mat
 save(SRID+".mat","TH1");
@@ -66,38 +61,54 @@ end % switch FOGS
 
 if ( FMLP == 1 )
 
-% load
+% load TH1
 load(LRID+".mat");
 
 % var alloc
-x  = TH1(2,:);
-y  = TH1(3,:);
-u  = TH1(4,:);
-v  = TH1(5,:);
+x    = TH1(2,:);
+y    = TH1(3,:);
 
-% input subspace X1
-X1 = [x; y; x.*y; x.*x.*y; x.*x.*x];
-% X1 = [x; y; x.*y; x.*x.*y; x.*x.*x; x.*x.*x.*y; x.*y.*y.*y; x.*x.*y.*y];
+% #snap and dt
+m    = size(x,2);
+dt   = TH1(1,2)-TH1(1,1);
 
-% input subspace X2
-X2 = [x; y; x.*y; x.*x.*y; x.*x.*x];
-% X2 = [x; y; x.*y; x.*x.*y; x.*x.*x; x.*x.*x.*y; x.*y.*y.*y; x.*x.*y.*y];
+% 1st derivatives
+for i=2:m
+    u(i) = (x(i)-x(i-1))/dt;
+    v(i) = (y(i)-y(i-1))/dt;
+end
+u(1) = u(2);
+v(1) = v(2);
 
-% output subspace Y1
-Y1 = [u];
+% 2nd derivatives
+for i=2:m
+    udot(i) = (u(i)-u(i-1))/dt;
+    vdot(i) = (v(i)-v(i-1))/dt;
+end
+udot(1) = udot(2);
+vdot(1) = vdot(2);
 
-% output subspace Y2
-Y2 = [v];
+% attach back to ref TH1
+TH1 = [TH1;u;v;udot;vdot];
 
-% unified solution space Z1
+% input subspace X (candidates)
+X1 = [u; v; u.*v; u.^2.*v; u.*v.^2; u.^3; v.^3];
+X2 = [u; v; u.*v; u.^2.*v; u.*v.^2; u.^3; v.^3];
+
+% X1 = [u;v;u.*v];
+% X2 = [u;v;u.*v];
+
+% output subspace Y
+Y1 = [udot];
+Y2 = [vdot];
+
+% unified solution space Z
 Z1 = [X1;Y1];
-
-% unified solution space Z2
 Z2 = [X2;Y2];
 
 % SVD for eigenvector extraction
-[U1, S1, V1] = svd(Z1,'econ');
-[U2, S2, V2] = svd(Z2,'econ');
+[U1, S1, V1] = svd(Z1(:,5:end),'econ');
+[U2, S2, V2] = svd(Z2(:,5:end),'econ');
 
 % governing equations
 nX1      =  size(X1,1);                % number of variables in input subspace 
@@ -108,20 +119,24 @@ U1yU1xP  =  U1y*pinv(U1x)              % MILPE low-rank governing equation (Uy*U
 nX2      =  size(X2,1);                
 U2x      =  U2(1:nX2     , 1:nX2);     
 U2y      =  U2(nX2+1:end , 1:nX2);     
-U2yU2xP  =  U2y*pinv(U2x)     
+U2yU2xP  =  U2y*pinv(U2x)   
 
 %% MILPE prediction
 % purpose: Predict RZF with approximated governing equation
 
 % controller
-te    =    5;                    % [s] simulation duration
-dt    =    1e-3;                  % [s] time-step
+te    =    10.0;                    % [s] simulation duration
+dt    =    1e-4;                  % [s] time-step
 m     =    floor((te)/dt+1);      % number of snapshots
 t     =    [0:m-1]*dt;
 
 % init cond
-x     =    TH1(2,1);
-y     =    TH1(3,1);
+x     =    TH1(2,5);
+y     =    TH1(3,5);
+u     =    TH1(4,5);
+v     =    TH1(5,5);
+% udot  =    TH1(6,5);
+% vdot  =    TH1(7,5);
 
 % time-loop
 for it=1:m
@@ -129,26 +144,26 @@ for it=1:m
     % echo
     if ( mod(it,100000) == 0 ) disp(it);  end
 
-    % input snapshot X1
-    X1 = [x y x*y x^2*y x^3];
-%     X1 = [x y x*y x^2*y x^3 x^3*y x*y^3 x^2*y^2];
+    % input snapshot X (candidates)
+    X1 = [u v u*v u^2*v u*v^2 u^3 v^3];
+    X2 = [u v u*v u^2*v u*v^2 u^3 v^3];
+%     X1 = [u v u*v];
+%     X2 = [u v u*v];
+
+    % output snapshot Y
+    udot = U1yU1xP * X1';
+    vdot = U2yU2xP * X2';
     
-    % input snapshot X2
-    X2 = [x y x*y x^2*y x^3];
-%     X2 = [x y x*y x^2*y x^3 x^3*y x*y^3 x^2*y^2];
-
-    % output snapshot Y1
-    u = U1yU1xP * X1';
-
-    % output snapshot Y2
-    v = U2yU2xP * X2';
+    % time-advance
+    u = u + udot*dt;
+    v = v + vdot*dt;
 
     % time-advance
     x = x + u*dt;
     y = y + v*dt;
 
     % store snapshot info
-    R = [it*dt x y u v]';
+    R = [it*dt x y u v udot vdot]';
 
     % init R0 at it==1
     if ( it == 1 ) TH2 = zeros(size(R,1),m); end
@@ -161,8 +176,8 @@ end % time-loop
 
 %% Verification 2 - time history comparison
 
-% load TH1
-load(LPID+".mat");
+% % load TH1
+% load(LPID+".mat");
 
 % time history - trajectory
 figure(1)
@@ -170,14 +185,16 @@ plot(TH1(2,:),TH1(3,:),'k'); hold on; % OG
 plot(TH2(2,:),TH2(3,:),'r');          % MILPE
 
 figure(2); 
-subplot(2,2,1); plot(TH1(1,:),TH1(2,:),'k'); hold on; plot(TH2(1,:),TH2(2,:),'r--'); title("x"); legend("OG","MILPE"); %xlim([0,3]);
-subplot(2,2,2); plot(TH1(1,:),TH1(3,:),'k'); hold on; plot(TH2(1,:),TH2(3,:),'r--'); title("y"); legend("OG","MILPE"); %xlim([0,3]);
-subplot(2,2,3); plot(TH1(1,:),TH1(4,:),'k'); hold on; plot(TH2(1,:),TH2(4,:),'r--'); title("u"); legend("OG","MILPE"); %xlim([0,3]);
-subplot(2,2,4); plot(TH1(1,:),TH1(5,:),'k'); hold on; plot(TH2(1,:),TH2(5,:),'r--'); title("v"); legend("OG","MILPE"); %xlim([0,3]);
+subplot(3,2,1); plot(TH1(1,:),TH1(2,:),'k'); hold on; plot(TH2(1,:),TH2(2,:),'r--'); title("x");    legend("OG","MILPE"); %xlim([0,3]);
+subplot(3,2,2); plot(TH1(1,:),TH1(3,:),'k'); hold on; plot(TH2(1,:),TH2(3,:),'r--'); title("y");    legend("OG","MILPE"); %xlim([0,3]);
+subplot(3,2,3); plot(TH1(1,:),TH1(4,:),'k'); hold on; plot(TH2(1,:),TH2(4,:),'r--'); title("u");    legend("OG","MILPE"); %xlim([0,3]);
+subplot(3,2,4); plot(TH1(1,:),TH1(5,:),'k'); hold on; plot(TH2(1,:),TH2(5,:),'r--'); title("v");    legend("OG","MILPE"); %xlim([0,3]);
+subplot(3,2,5); plot(TH1(1,:),TH1(6,:),'k'); hold on; plot(TH2(1,:),TH2(6,:),'r--'); title("udot"); legend("OG","MILPE"); %xlim([0,3]);
+subplot(3,2,6); plot(TH1(1,:),TH1(7,:),'k'); hold on; plot(TH2(1,:),TH2(7,:),'r--'); title("vdot"); legend("OG","MILPE"); %xlim([0,3]);
 
 
 end % FMLP
 
-AAF(2,3,3)
+AAF(2,3,1)
 
 
