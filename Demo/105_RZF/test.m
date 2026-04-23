@@ -29,8 +29,8 @@ LPID = 104;     % id-post for OG and MILPE comparison
 if( FOGS == 1 )
 
 % controller
-te    =    20;                       % [s] simulation duration
-dt    =    1e-5;                    % [s] time-step
+te    =    10;                       % [s] simulation duration
+dt    =    1e-4;                    % [s] time-step
 m     =    floor((te)/dt+1);        % number of snapshots
 t     =    [0:m-1]*dt;
 
