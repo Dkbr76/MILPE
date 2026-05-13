@@ -44,7 +44,17 @@ end
 % Ux    =  Projection matrix on input subspace    
 % Uy    =  Projection matrix on output subspace    
 % UyUxP =  Approx. Governing Equation 
-
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
 
 
 
