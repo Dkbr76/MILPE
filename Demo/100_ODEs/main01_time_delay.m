@@ -22,7 +22,7 @@ m  = floor((te)/dt+1);      % number of snapshots
 t  = [0:m]*dt;
 
 % input time-history(s)
-x1 = sin( t*2*pi*0.5 + pi*0.0);
+x1 = sin( t*2*pi*0.5 + pi*0.0); % <- baseline
 x2 = sin( t*2*pi*0.5 + pi*0.1);
 x3 = sin( t*2*pi*0.5 + pi*0.2);
 x4 = sin( t*2*pi*0.5 + pi*0.3);
