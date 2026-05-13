@@ -19,20 +19,20 @@ clear all; close all;
 %% OG Lorenz simulation 1
 % purpose: data aquisition for the eigenvector extraction
 disp("OG LRZ Sim #1");
-te    =    1.0;                   % [s] simulation duration
+te    =    1e-3;                  % [s] simulation duration
 dt    =    1e-6;                  % [s] time-step
-ic    =    [-8 7 27];             % [-] initial condition
-co    =    [10 8/3 28];           % [-] LRZ coeff
+ic    =    [-8 7 27];             % [-] initial condition   : displacement (x,y,z)
+co    =    [10 8/3 28];           % [-] LRZ coeff           : sigma, beta, rho
 TH0   =    LRZ(te,dt,ic,co);      % Run Lorenz func and obtain time-history
 
 
 %% OG Lorenz simulation 2
 % purpose: simulate Lorenz longer time for the comparison against MILPE prediction
 disp("OG LRZ Sim #2");
-te    =    10.0;                  % [s] simulation duration
+te    =    1e+1;                  % [s] simulation duration
 dt    =    1e-6;                  % [s] time-step
-ic    =    [-8 7 27];             % [-] initial condition
-co    =    [10 8/3 28];           % [-] LRZ coeff
+ic    =    [-8 7 27];             % [-] initial condition   : displacement (x,y,z)
+co    =    [10 8/3 28];           % [-] LRZ coeff           : sigma, beta, rho
 TH1   =    LRZ(te,dt,ic,co);      % Run Lorenz func and obtain time-history
 
 
@@ -71,11 +71,11 @@ UyUxP = MILPE(X,Y,0); % MILPE low-rank governing equation (Uy*Ux+)
 disp("MILPE Prediction");
 
 % controller 
-te    =    10;                    % [s] simulation duration
+te    =    1e+1;                    % [s] simulation duration
 dt    =    1e-6;                  % [s] time-step
 m     =    floor((te)/dt+1);      % number of snapshots
 
-% initial condition
+% initial condition - displacement
 x     =    -8; 
 y     =     7; 
 z     =    27;
