@@ -99,7 +99,8 @@ t2d  =   0*d2r;                 % [rad/s] theta2_dot, angular velocity of the 2n
 for it=1:m
 
     % echo
-    if ( mod(it,10000) == 0 ) disp(it);  end
+    if ( it == 1 ) cnt = 20; end % counter
+    if ( mod(it,0.2*m) < 1 ) disp("MILPE......"+cnt+"%"); cnt = cnt+20; end
 
     % input snapshot X1
     DENOM   = 3-cos(2*t1-2*t2);
