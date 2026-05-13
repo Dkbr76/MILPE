@@ -8,9 +8,10 @@
 
 
 % MILPE demo - Data-driven Lorenz 1963 Prediction 
-% Mar.2026 https://www.mdpi.com/3762868
+% Mar.2026 https://www.mdpi.com/3762868 
 
 clear all; close all;
+
 
 
 
@@ -186,7 +187,7 @@ for it=1:m
     R = [it*dt x y z u v w]';
 
     % init R0 at it==1
-    if ( it == 1 ) R2 = zeros(size(R,2),m); end
+    if ( it == 1 ) R2 = zeros(size(R,1),m); end
 
     % save as time-history
     R2(:,it) = R;
@@ -228,6 +229,7 @@ plot3(R2(2,:),R2(3,:),R2(4,:),'r');          % MILPE
 xlabel('x');
 ylabel('y');
 zlabel('z');
+legend("OG","MILPE");
 
 % time history - x-position
 figure(11)
@@ -235,6 +237,7 @@ plot(R1(1,:),R1(2,:),'k'); hold on; % OG
 plot(R2(1,:),R2(2,:),'r');          % MILPE
 xlabel('t');
 ylabel('x');
+legend("OG","MILPE");
 
 % time history - y-position
 figure(12)
@@ -242,6 +245,7 @@ plot(R1(1,:),R1(3,:),'k'); hold on; % OG
 plot(R2(1,:),R2(3,:),'r');          % MILPE
 xlabel('t');
 ylabel('y');
+legend("OG","MILPE");
 
 % time history - z-position
 figure(13)
@@ -249,6 +253,6 @@ plot(R1(1,:),R1(4,:),'k'); hold on; % OG
 plot(R2(1,:),R2(4,:),'r');          % MILPE
 xlabel('t');
 ylabel('z');
-
+legend("OG","MILPE");
 
 
