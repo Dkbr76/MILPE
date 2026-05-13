@@ -22,8 +22,8 @@ clear all; close all;
 disp("OG DP Sim #1");
 te    =  3.0;                   % [s] simulation duration
 dt    =  1e-5;                  % [s] time-step
-ic    =  [10 10 0 0];           % initial condition
-co    =  [1 1 1 1 9.8];         % DP parameters
+ic    =  [10 10 0 0];           % initial condition [theta1, theta2, theta1_dot, theta2_dot]
+co    =  [1 1 1 1 9.8];         % DP parameters [L1, L2, m1, m2, g]
 TH0   =  DP(te,dt,ic,co);       % Run DP func and obtain time-history
 
 
@@ -32,8 +32,8 @@ TH0   =  DP(te,dt,ic,co);       % Run DP func and obtain time-history
 disp("OG DP Sim #2");
 te    =  20.0;                  % [s] simulation duration
 dt    =  1e-5;                  % [s] time-step
-ic    =  [70 50 0 0];           % initial condition
-co    =  [1 1 1 1 9.8];         % DP parameters
+ic    =  [70 50 0 0];           % initial condition [theta1, theta2, theta1_dot, theta2_dot]
+co    =  [1 1 1 1 9.8];         % DP parameters [L1, L2, m1, m2, g]
 TH1   =  DP(te,dt,ic,co);       % Run DP func and obtain time-history
 
 
