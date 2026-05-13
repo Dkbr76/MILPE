@@ -18,32 +18,22 @@ clear all; close all;
 
 %% OG Lorenz simulation 1
 % purpose: data aquisition for the eigenvector extraction
-
-% controller 
+disp("OG LRZ Sim #1");
 te    =    1.0;                   % [s] simulation duration
 dt    =    1e-6;                  % [s] time-step
-ic    =    [-8 7 27];             % initial condition
-co    =    [10 8/3 28];           % LRZ coeff
-
-% Lorenz function
-TH0    =    LRZ(te,dt,ic,co);
-
-
-
-
+ic    =    [-8 7 27];             % [-] initial condition
+co    =    [10 8/3 28];           % [-] LRZ coeff
+TH0   =    LRZ(te,dt,ic,co);      % Run Lorenz func and obtain time-history
 
 
 %% OG Lorenz simulation 2
-% purpose: Simulate Lorenz longer time for the comparison against MILPE prediction
-
-% controller 
+% purpose: simulate Lorenz longer time for the comparison against MILPE prediction
+disp("OG LRZ Sim #2");
 te    =    10.0;                  % [s] simulation duration
 dt    =    1e-6;                  % [s] time-step
-ic    =    [-8 7 27];             % initial condition
-co    =    [10 8/3 28];           % LRZ coeff
-
-% Lorenz function
-TH1    =    LRZ(te,dt,ic,co);
+ic    =    [-8 7 27];             % [-] initial condition
+co    =    [10 8/3 28];           % [-] LRZ coeff
+TH1   =    LRZ(te,dt,ic,co);      % Run Lorenz func and obtain time-history
 
 
 
@@ -52,8 +42,9 @@ TH1    =    LRZ(te,dt,ic,co);
 
 %% MILPE algorithm
 % purpose: extract eigenvectors and construct approximated governing equation
+disp("Running MILPE Algorithm");
 
-% var alloc (committed overwriting var names)
+% var alloc from ref time-history used for eigenvector extraction
 x = TH0(2,:);
 y = TH0(3,:);
 z = TH0(4,:);
@@ -77,6 +68,7 @@ UyUxP = MILPE(X,Y,0); % MILPE low-rank governing equation (Uy*Ux+)
 
 %% MILPE prediction
 % purpose: Predict Lorenz with approximated governing equation
+disp("MILPE Prediction");
 
 % controller 
 te    =    10;                    % [s] simulation duration
@@ -179,5 +171,6 @@ plot(TH2(1,:),TH2(4,:),'r');          % MILPE
 xlabel('t');
 ylabel('z');
 
+AAF
 
 
