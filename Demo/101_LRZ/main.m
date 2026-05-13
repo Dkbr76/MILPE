@@ -171,6 +171,6 @@ plot(TH2(1,:),TH2(4,:),'r');          % MILPE
 xlabel('t');
 ylabel('z');
 
-AAF
+aaf
 
 
