@@ -8,10 +8,9 @@
 
 
 % MILPE demo - Data-driven Lorenz 1963 Prediction 
-% Mar.2026 https://www.mdpi.com/3762868 
+% Mar.2026 https://www.mdpi.com/3762868
 
 clear all; close all;
-
 
 
 
@@ -23,77 +22,12 @@ clear all; close all;
 % controller 
 te    =    1.0;                   % [s] simulation duration
 dt    =    1e-6;                  % [s] time-step
-m     =    floor((te)/dt+1);      % number of snapshots
+ic    =    [-8 7 27];             % initial condition
+co    =    [10 8/3 28];           % LRZ coeff
 
-% initial condition
-x     =    -8; 
-y     =     7; 
-z     =    27;
+% Lorenz function
+TH0    =    LRZ(te,dt,ic,co);
 
-% parameters 
-L1    =    10;                    % sigma
-L2    =   8/3;                    % beta
-L3    =    28;                    % rho
-
-% time-loop
-for it=1:m
-
-    % echo
-    if ( mod(it,1000) == 0 ) disp(it);  end
-
-    % Lorenz 
-    u = L1*(y-x);
-    v = x*(L3-z)-y;
-    w = x*y-L2*z;
-
-    % time-advance
-    x = x + u*dt;
-    y = y + v*dt;
-    z = z + w*dt;
-
-    % store snapshot info
-    R = [it*dt x y z u v w]';
-
-    % init R0 at it==1
-    if ( it == 1 ) R0 = zeros(size(R,1),m); end
-
-    % save as time-history
-    R0(:,it) = R;
-
-end
-
-
-
-
-
-%% MILPE algorithm
-% purpose: extract eigenvectors and construct approximated governing equation
-
-% var alloc (committed overwriting var names)
-x = R0(2,:);
-y = R0(3,:);
-z = R0(4,:);
-u = R0(5,:);
-v = R0(6,:);
-w = R0(7,:);
-
-% input subspace
-X = [x; y; z; x.*z; x.*y]; 
-
-% output subspace
-Y = [u; v; w];
-
-% unified solution space (Z)
-Z = [X;Y];
-
-% SVD for eigenvector extraction
-[U, S, V] = svd(Z,'econ');
-
-% governing equation
-nX       =  size(X,1);              % number of variables in input subspace 
-Ux       =  U(1:nX     , 1:nX);     % projection matrix on input subspace   
-Uy       =  U(nX+1:end , 1:nX);     % projection matrix on output subspace  
-UyUxP    =  Uy*pinv(Ux);            % MILPE low-rank governing equation (Uy*Ux+)
 
 
 
@@ -103,46 +37,39 @@ UyUxP    =  Uy*pinv(Ux);            % MILPE low-rank governing equation (Uy*Ux+)
 % purpose: Simulate Lorenz longer time for the comparison against MILPE prediction
 
 % controller 
-te    =    10;                    % [s] simulation duration
+te    =    10.0;                  % [s] simulation duration
 dt    =    1e-6;                  % [s] time-step
-m     =    floor((te)/dt+1);      % number of snapshots
+ic    =    [-8 7 27];             % initial condition
+co    =    [10 8/3 28];           % LRZ coeff
 
-% initial condition
-x     =    -8; 
-y     =     7; 
-z     =    27;
+% Lorenz function
+TH1    =    LRZ(te,dt,ic,co);
 
-% parameters 
-L1    =    10;                    % sigma
-L2    =   8/3;                    % beta
-L3    =    28;                    % rho
 
-% time-loop
-for it=1:m
 
-    % echo
-    if ( mod(it,10000) == 0 ) disp(it);  end
 
-    % Lorenz 
-    u = L1*(y-x);
-    v = x*(L3-z)-y;
-    w = x*y-L2*z;
 
-    % time-advance
-    x = x + u*dt;
-    y = y + v*dt;
-    z = z + w*dt;
 
-    % store snapshot info
-    R = [it*dt x y z u v w]';
+%% MILPE algorithm
+% purpose: extract eigenvectors and construct approximated governing equation
 
-    % init R0 at it==1
-    if ( it == 1 ) R1 = zeros(size(R,1),m); end
+% var alloc (committed overwriting var names)
+x = TH0(2,:);
+y = TH0(3,:);
+z = TH0(4,:);
+u = TH0(5,:);
+v = TH0(6,:);
+w = TH0(7,:);
 
-    % save as time-history
-    R1(:,it) = R;
+% input subspace
+X = [x; y; z; x.*z; x.*y]; 
 
-end
+% output subspace
+Y = [u; v; w];
+
+% MILPE
+UyUxP = MILPE(X,Y,0); % MILPE low-rank governing equation (Uy*Ux+)
+
 
 
 
@@ -165,7 +92,8 @@ z     =    27;
 for it=1:m
 
     % echo
-    if ( mod(it,10000) == 0 ) disp(it);  end
+    if ( it == 1 ) cnt = 20; end % counter
+    if ( mod(it,0.2*m) < 1 ) disp("MILPE......"+cnt+"%"); cnt = cnt+20; end
 
     % input snapshot X
     X = [x y z x*z x*y];
@@ -184,15 +112,16 @@ for it=1:m
     z = z + w*dt;
 
     % store snapshot info
-    R = [it*dt x y z u v w]';
+    SNP = [it*dt x y z u v w]';
 
     % init R0 at it==1
-    if ( it == 1 ) R2 = zeros(size(R,1),m); end
+    if ( it == 1 ) TH2 = zeros(size(SNP,1),m); end
 
     % save as time-history
-    R2(:,it) = R;
+    TH2(:,it) = SNP;
 
 end
+
 
 
 
@@ -212,9 +141,8 @@ UyUxP
 D = UyUxP - A
 
 % NRMSE
-NUMER = sqrt( sum(sum(D.^2,2)) / ( size(D,1)*size(D,2) ) ); %numerator
-DENOM = sqrt( sum(sum(A.^2,2)) / ( size(A,1)*size(A,2) ) ); %denomenator
-NRMSE = NUMER/DENOM
+NRMSE1 = NRMSE(A,UyUxP)
+
 
 
 
@@ -224,35 +152,32 @@ NRMSE = NUMER/DENOM
 
 % time history - trajectory
 figure(1)
-plot3(R1(2,:),R1(3,:),R1(4,:),'k'); hold on; % OG
-plot3(R2(2,:),R2(3,:),R2(4,:),'r');          % MILPE
+plot3(TH1(2,:),TH1(3,:),TH1(4,:),'k'); hold on; % OG
+plot3(TH2(2,:),TH2(3,:),TH2(4,:),'r');          % MILPE
 xlabel('x');
 ylabel('y');
 zlabel('z');
-legend("OG","MILPE");
 
 % time history - x-position
 figure(11)
-plot(R1(1,:),R1(2,:),'k'); hold on; % OG
-plot(R2(1,:),R2(2,:),'r');          % MILPE
+plot(TH1(1,:),TH1(2,:),'k'); hold on; % OG
+plot(TH2(1,:),TH2(2,:),'r');          % MILPE
 xlabel('t');
 ylabel('x');
-legend("OG","MILPE");
 
 % time history - y-position
 figure(12)
-plot(R1(1,:),R1(3,:),'k'); hold on; % OG
-plot(R2(1,:),R2(3,:),'r');          % MILPE
+plot(TH1(1,:),TH1(3,:),'k'); hold on; % OG
+plot(TH2(1,:),TH2(3,:),'r');          % MILPE
 xlabel('t');
 ylabel('y');
-legend("OG","MILPE");
 
 % time history - z-position
 figure(13)
-plot(R1(1,:),R1(4,:),'k'); hold on; % OG
-plot(R2(1,:),R2(4,:),'r');          % MILPE
+plot(TH1(1,:),TH1(4,:),'k'); hold on; % OG
+plot(TH2(1,:),TH2(4,:),'r');          % MILPE
 xlabel('t');
 ylabel('z');
-legend("OG","MILPE");
+
 
 
