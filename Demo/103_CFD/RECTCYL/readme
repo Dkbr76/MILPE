@@ -1,0 +1,4 @@
+
+MILPE demo for predicting pressure field of moving object using kinematic info.
+Current demo constructs MILPE approximated governing equation with the last mode excluded.
+Cascading is also promising but requires lots of intermediate procedure so it will be published after being more generic.
