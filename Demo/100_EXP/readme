@@ -14,7 +14,11 @@ Observation:
       Mathematically, this happens because a tiny phase-shifted sine contains information about the derivative direction of sin(t), which is cos(t).
       the two input signals are almost identical, but their tiny difference contains the missing derivative information.
 ==========================================================================================================================================================
-
+"main02"
+Objective: Reconstruction of step-function via linear combination of cosines.
+Observation:
+  - Result is similar to DFT result?
+==========================================================================================================================================================
 
 
 
