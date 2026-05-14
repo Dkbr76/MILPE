@@ -9,12 +9,17 @@
 
 % MILPE principle - 1
 % 2 0 2 6 . 0 5 
-% Reconstruct cos(2*pi*0.5*t) with sin(2*pi*0.5*t): probably time-delay problem?
+% Reconstruct cos(t) with sin(t): probably time-delay problem?
 
 clear all; close all;
 
+
+
+
+
+
 % ctrl
-te = 10;                    % simulation duration
+te = 1e+1;                  % simulation duration
 dt = 1e-2;                  % time-step
 m  = floor((te)/dt+1);      % number of snapshots
 
@@ -22,29 +27,21 @@ m  = floor((te)/dt+1);      % number of snapshots
 t  = [0:m]*dt;
 
 % input time-history(s)
-x1 = sin( t*2*pi*0.5 + pi*0.0); % <- baseline
-x2 = sin( t*2*pi*0.5 + pi*0.1);
-x3 = sin( t*2*pi*0.5 + pi*0.2);
-x4 = sin( t*2*pi*0.5 + pi*0.3);
-x5 = sin( t*2*pi*0.5 + pi*0.4);
+x1 = sin( t );              % <- baseline
+x2 = sin( t + 1e-13);
 
 % input-subspace
-X  =  [x1;x2;x3;x4;x5];
+X  =  [x1;x2];
 
 % output-subspace
-Y  = cos(t*2*pi*0.5);
+Y  =  cos(t);
 
 % MILPE
-Z         =  [X;Y];         % unified space
-nX        =  size(X,1);     % dim of X
-nMe       =  0;             % number of modes excluded
-[U,S,V]   =  svd(Z,'econ'); U
-Ux        =  U(   1:nX  ,  1:nX-nMe);
-Uy        =  U(nX+1:end ,  1:nX-nMe);
-UyUxP     =  Uy*pinv(Ux)
+UyUxP = MILPE(X,Y,0);
 
 % sav time-history
 TH0 = [t;X;Y];
+
 
 
 
@@ -60,7 +57,7 @@ for it=1:m
     if ( mod(it,0.2*m) < 1 ) disp("MILPE......"+cnt+"%"); cnt = cnt+20; end
 
     % input snapshot X
-    X = [ x1(it) x2(it) x3(it) x4(it) x5(it)];
+    X = [ x1(it) x2(it) ];
 
     % output snapshot Y
     Y = UyUxP * X';
@@ -76,15 +73,17 @@ for it=1:m
 
 end
    
+
+
+
+
+
 % time history - x-position
 figure(11)
-plot(TH0(1,:),TH0(  2,:),'c'); hold on; % OG - x1
-plot(TH0(1,:),TH0(  3,:),'c'); hold on; % OG - x2
-plot(TH0(1,:),TH0(  4,:),'c'); hold on; % OG - x3
-plot(TH0(1,:),TH0(  5,:),'c'); hold on; % OG - x4
-plot(TH0(1,:),TH0(  6,:),'c'); hold on; % OG - x5
-plot(TH0(1,:),TH0(end,:),'k'); hold on; % OG - y
-plot(TH1(1,:),TH1(end,:),'m--');        % MILPE - y
+plot(TH0(1,:),TH0(  2,:),'c'); hold on;   % OG - x1
+plot(TH0(1,:),TH0(  3,:),'b--'); hold on; % OG - x2
+plot(TH0(1,:),TH0(end,:),'k'); hold on;   % OG - y
+plot(TH1(1,:),TH1(end,:),'m--');          % MILPE - y
 xlabel('t');
 ylabel('vars');
 
