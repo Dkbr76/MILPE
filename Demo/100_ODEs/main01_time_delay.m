@@ -28,7 +28,7 @@ t  = [0:m]*dt;
 
 % input time-history(s)
 x1 = sin( t );              % <- baseline
-x2 = sin( t + 1e-13);
+x2 = sin( t + 1e-13);       % variant
 
 % input-subspace
 X  =  [x1;x2];
@@ -37,7 +37,7 @@ X  =  [x1;x2];
 Y  =  cos(t);
 
 % MILPE
-UyUxP = MILPE(X,Y,0);
+UyUxP = MILPE(X,Y,0)
 
 % sav time-history
 TH0 = [t;X;Y];
