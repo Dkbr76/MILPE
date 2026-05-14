@@ -1,1 +1,9 @@
 
+This demo trains eigenvectors with short amount of 3 body's trajectories and forecasts their longer trajectories.
+Unlike other demos, I think there's no need to look for another Hilbert space other than the current one.
+
+I'm not astrophycist, so I'm not sure for every details 
+but the current result represents forecasting the 3 body's trajectory
+without having information of 3 body's masses. Therefore, if the circumstances doesn't provide their mass information, this might be useful.
+
+Expanding the current version to N-body simulation is on going so that it becomes more easy to use and generic.
