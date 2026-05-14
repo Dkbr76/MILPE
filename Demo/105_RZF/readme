@@ -30,6 +30,6 @@ Then find the approx dynamic system that uses inputs u, v and their H.O.T and ou
 Current status
 - extracting eigenvectors and thus approx GE seems to stable when shorter amount of RZF data is used (but never knows)
 - Current Bases are [u v uv uuv uvv uuu vvv] for both udot and vdot.
-- need to find correct Hilbert space. Lacking module.
+- need to find correct Hilbert space. Lacking module. -> need deeper understanding or viable strategy
 - also need to consider how sensitive to dt (delta t). currently using 1e-4 and 1e-5 and testing 1e-6 -> 1e-5 seems okay
 - 0<t<12 seems transitional, so better truncate
