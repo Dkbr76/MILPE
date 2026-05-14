@@ -1,0 +1,7 @@
+
+"Global approach" means forming the Hilbert space with prior knowledge for DP problem. 
+"Local approach" will use much simpler, easy to come up with, basis that forms much simpler Hilbert space. 
+Essentially, "Local approah" can forecast but shows extrapolation capability much limited than "Global approach".
+
+Still, "Local approach" provides initiative to construct a Surrogate model especially if the problem has
+plenty of data and if the main focus is multi-input multi-output interpolation.
