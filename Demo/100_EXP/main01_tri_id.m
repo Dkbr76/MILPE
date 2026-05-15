@@ -10,7 +10,7 @@
 % MILPE principle - 1
 % 2 0 2 6 . 0 5 
 % Reconstruct cos(t) with sin(t): 
-%   - same as triagonal identity (yet data-driven) and probably related to time-delay problem?
+%   - same as triagonal identity and probably related to time-delay problem?
 
 clear all; close all;
 
