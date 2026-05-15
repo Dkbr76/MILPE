@@ -34,7 +34,7 @@ x4  = cos(t* 7);
 x5  = cos(t* 9);              
 x6  = cos(t*11);              
 
-% input time-history(s)
+% output time-history(s)
 y1  = sign(cos(t));
 
 % input-subspace
