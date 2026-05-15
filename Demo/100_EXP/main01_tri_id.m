@@ -44,9 +44,6 @@ UyUxP = MILPE(X,Y,0)
 % LSQ
 a1 = L2(X,Y)
 
-% sav time-history
-TH0 = [t;X;Y];
-
 
 
 
