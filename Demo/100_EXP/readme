@@ -26,7 +26,7 @@ Observation (GPT):
   - Instead, it shows that MILPE can reproduce a known spectral projection when the input subspace is constructed from harmonic basis functions. 
   - This confirms that the method behaves consistently with classical projection theory. 
   - The benefit of the data-driven formulation is that the same projection framework can be extended to arbitrary measured or constructed input spaces, 
-    where no analytical Fourier-like coefficient formula is available.
+    where no analytical Fourier-like coefficient formula is available. -> need to compare with standard LSQ
 
 ==========================================================================================================================================================
 
