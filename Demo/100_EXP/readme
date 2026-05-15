@@ -5,14 +5,9 @@ This might be the place for studying the fundamentals of MILPE algorithm..
 ==========================================================================================================================================================
 "main01"
 Objective: Reconstruction of cos(t) via linear combination of sin(t) and sin(t+1e-13).
-Observation:  
-  - First of all, this demo wasn't originally planned. Not sure either if the result is valuable.
-  - Inputs and outputs are designed as simple as possible to explore the behavior of algorithm.
-  - sin(t) alone can't represent cos(t) but it is possible if sin(t+1e-13) joins.
-  - why...?
-  - GPT answer:
-      Mathematically, this happens because a tiny phase-shifted sine contains information about the derivative direction of sin(t), which is cos(t).
-      the two input signals are almost identical, but their tiny difference contains the missing derivative information.
+  - This example is equivalent to the trigonometric angle-addition identity, but expressed in a data-driven linear-projection form. 
+  - While the analytical identity explicitly shows how cos(t) is embedded in a phase-shifted sine function, 
+    MILPE identifies the corresponding projection coefficients directly from sampled data.
 ==========================================================================================================================================================
 "main02"
 Objective: Reconstruction of step-function via linear combination of cosines.
