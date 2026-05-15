@@ -47,22 +47,26 @@ Y  =  [ y1 ];
 % MILPE
 UyUxP = MILPE(X,Y,0)
 
-% sav time-history
-TH0 = [t;X;Y];
-
-
-
-
-
-
-% MILPE - Projection
+% MILPE Projection
 y1_MILPE = UyUxP * X;
 
+
+
+
+
+
+% LSQ
+a1 = L2(X,Y)
+
+% LSQ Projection
+y1_LSQ = a1 * X;
    
 
 
 
-% verification - compare with DFT result
+
+
+% DFT
 [amp,phs,f] =  DFT(y1,dt);                      % exec DFT for y1, frequency might dependent on circumstances
 y1_DFT      =  DFT_RECON(amp,phs,f,dt,m,12);    % DFT reconstruction 
 
@@ -72,16 +76,12 @@ y1_DFT      =  DFT_RECON(amp,phs,f,dt,m,12);    % DFT reconstruction
 
 % time history 
 figure(11)
-plot(TH0(1,:),TH0(  2,:),'c'); hold on; % OG - x1
-plot(TH0(1,:),TH0(  3,:),'c'); hold on; % OG - x2
-plot(TH0(1,:),TH0(  4,:),'c'); hold on; % OG - x3
-plot(TH0(1,:),TH0(  5,:),'c'); hold on; % OG - x4
-plot(TH0(1,:),TH0(  6,:),'c'); hold on; % OG - x5
-plot(TH0(1,:),TH0(  7,:),'c'); hold on; % OG - x6
-plot(TH0(1,:),TH0(end,:),'k'); hold on; % OG - y1
-plot(t,y1_MILPE,'k--');        % MILPE - y1
-plot(t,y1_DFT,'m--');            % DFT - y1
+plot(t,y1,      'k'  ); hold on;   % y1 - OG
+plot(t,y1_MILPE,'k--');            % y1 - MILPE 
+plot(t,y1_LSQ,  'r'  );            % y1 - LSQ
+plot(t,y1_DFT,  'y--');            % y1 - DFT 
 xlabel('t');
 ylabel('vars');
+legend("OG","MILPE","LSQ","DFT");
 
 aaf
