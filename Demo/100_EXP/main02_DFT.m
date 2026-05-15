@@ -24,7 +24,7 @@ dt = 1e-5;                  % time-step
 m  = floor((te)/dt+1);      % number of snapshots
 
 % time-vector
-t  = [0:m]*dt;
+t  = [0:m-1]*dt;
 
 % input time-history(s)
 x1  = cos(t* 1);              
@@ -55,38 +55,16 @@ TH0 = [t;X;Y];
 
 
 
-% MILPE-Prediction
+% MILPE - Projection
+y1_MILPE = UyUxP * X;
 
-% time-loop
-for it=1:m
-
-    % echo
-    if ( it == 1 ) cnt = 20; end % counter
-    if ( mod(it,0.2*m) < 1 ) disp("MILPE......"+cnt+"%"); cnt = cnt+20; end
-
-    % input snapshot X
-    X = [ x1(it)  x2(it)  x3(it)  x4(it)  x5(it)  x6(it) ];
-
-    % output snapshot Y
-    Y = UyUxP * X';
-
-    % store snapshot info
-    SNP = [it*dt X Y]';
-
-    % init TH at it==1
-    if ( it == 1 ) TH1 = zeros(size(SNP,1),m); end
-
-    % save as time-history
-    TH1(:,it) = SNP;
-
-end
    
 
 
 
 % verification - compare with DFT result
 [amp,phs,f] =  DFT(y1,dt);                      % exec DFT for y1, frequency might dependent on circumstances
-y1_RECON    =  DFT_RECON(amp,phs,f,dt,m,12);    % DFT reconstruction 
+y1_DFT      =  DFT_RECON(amp,phs,f,dt,m,12);    % DFT reconstruction 
 
 
 
@@ -101,8 +79,8 @@ plot(TH0(1,:),TH0(  5,:),'c'); hold on; % OG - x4
 plot(TH0(1,:),TH0(  6,:),'c'); hold on; % OG - x5
 plot(TH0(1,:),TH0(  7,:),'c'); hold on; % OG - x6
 plot(TH0(1,:),TH0(end,:),'k'); hold on; % OG - y1
-plot(TH1(1,:),TH1(end,:),'k--');        % MILPE - y1
-plot(TH1(1,:),y1_RECON,'m--');            % DFT - y1
+plot(t,y1_MILPE,'k--');        % MILPE - y1
+plot(t,y1_DFT,'m--');            % DFT - y1
 xlabel('t');
 ylabel('vars');
 
