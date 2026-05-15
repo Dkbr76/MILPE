@@ -34,8 +34,9 @@ x4  = cos(t* 7);
 x5  = cos(t* 9);              
 x6  = cos(t*11);              
 
-% output time-history(s)
-y1  = sign(cos(t));
+% output time-history(s) - choose one from examples or try adding your own harmonics 
+% y1  = 2*cos(t) - 0.5*cos(3*t) + 0.25*cos(7*t);  % random harmonic function 1
+y1  = sign(cos(t));                             % step function
 
 % input-subspace
 X  =  [ x1; x2; x3; x4; x5; x6 ];
@@ -83,15 +84,9 @@ end
 
 
 
-% verification - compare with Analytic DFT result
-
-% pure analytic
-Analytic    =  [ 4/pi -4/(3*pi) 4/(5*pi) -4/(7*pi) 4/(9*pi) -4/(11*pi) ]
-D           =  Analytic - UyUxP
-
-% DFT
-[amp,phs,f] =  DFT(y1,dt);  % exec DFT for y1, frequency might dependent on circumstances
-y1_RECON    =  DFT_RECON(amp,phs,f,dt,m,12);
+% verification - compare with DFT result
+[amp,phs,f] =  DFT(y1,dt);                      % exec DFT for y1, frequency might dependent on circumstances
+y1_RECON    =  DFT_RECON(amp,phs,f,dt,m,12);    % DFT reconstruction 
 
 
 
