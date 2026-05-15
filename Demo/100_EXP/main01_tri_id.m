@@ -41,17 +41,17 @@ Y  = [y1];
 % MILPE
 UyUxP = MILPE(X,Y,0)
 
-% LSQ
-a1 = L2(X,Y)
-
-
-
-
-
-
-% MILPE-Prediction
+% MILPE projection
 y1_MILPE = UyUxP * X;
-y1_LSQ   = a1    * X;
+
+
+
+
+
+
+% LSQ projection
+a1      =  L2(X,Y)
+y1_LSQ  =  a1 * X;
    
 
 
