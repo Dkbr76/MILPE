@@ -61,6 +61,9 @@ Y = [u; v; w];
 % MILPE
 UyUxP = MILPE(X,Y,0); % MILPE low-rank governing equation (Uy*Ux+)
 
+% LSQ
+a1 = L2(X,Y)
+
 
 
 
