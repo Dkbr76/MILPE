@@ -69,6 +69,17 @@ U2yU2xP = MILPE(X2,Y2,0); % MILPE low-rank governing equation (Uy*Ux+)
 
 
 
+
+
+% LSQ
+a1 = L2(X1,Y1);
+a2 = L2(X2,Y2);
+
+
+
+
+
+
 %% MILPE prediction
 % purpose: Predict Double-pendulum with approximated governing equation
 
@@ -105,7 +116,7 @@ for it=1:m
 
     % output snapshot Y2
     Y2 = U2yU2xP * X2';
-
+  
     % var alloc
     t1dd = Y1; 
     t2dd = Y2;
@@ -135,6 +146,10 @@ end
 
 U1yU1xP
 U2yU2xP
+
+a1
+a2
+
 
 
 
