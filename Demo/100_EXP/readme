@@ -14,7 +14,7 @@ Observation (GPT):
 ==========================================================================================================================================================
 "main02"
 Objective: 
-  - Reconstruction of step-function via linear combination of cosines: Relation to Fourier-series
+  - Reconstruction of step-function via linear combination of cosines: Exploring relation to Fourier-series
   - MILPE vs DFT
 Observation (GPT):
   - The Fourier-series demo is not intended to outperform classical Fourier analysis. 
