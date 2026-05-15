@@ -40,35 +40,22 @@ UyUxP  =  MILPE(X,Y,1);              % MILPE low-rank governing equation (Uy*Ux+
 
 
 
+
 %% MILPE prediction - Case #1 (forecasting)
 % purpose: Predict pressure field with approximated governing equation
 % forced-oscillation r=(0.1)*sin(0.4*pi*t)
 
-% controller
-te    =  10;                    % [s] simulation duration
-dt    =  0.04;                  % [s] time-step
-m     =  floor((te)/dt+1);      % number of snapshots
+Y_MILPE = UyUxP * X;
 
-% time-loop
-for it=1:m
 
-    % echo
-    if ( it == 1 ) cnt = 20; end % counter
-    if ( mod(it,0.2*m) < 1 ) disp("MILPE......"+cnt+"%"); cnt = cnt+20; end
 
-    % input snapshot X
-    X = [v(it) a(it) a(it)^2 v(it)^2 v(it)*a(it) a(it)^3 v(it)^3]; % candidate #5 from Table A1
 
-    % output snapshot Y
-    Ytmp = UyUxP * X';      
 
-    % init Ym at it==1 (Ym: Y_MILPE)
-    if ( it == 1 ) Ym = zeros(size(Ytmp,1),m); end
 
-    % save as time-history
-    Ym(:,it) = Ytmp;
+%% LSQ
+a_LSQ = L2(X,Y);
+Y_LSQ = a_LSQ * X;
 
-end
 
 
 
@@ -76,7 +63,11 @@ end
 
 %% Verification 1 - time history comparison for case #1
 
-t = [0:m-1]*dt; % prepare time vector
+% controller
+te    =  10;                    % [s] simulation duration
+dt    =  0.04;                  % [s] time-step
+m     =  floor((te)/dt+1);      % number of snapshots
+t     =  [0:m-1]*dt; % prepare time vector
 
 % 3072 pressure signals (OG)
 figure(11) 
@@ -90,22 +81,33 @@ ylim([-40,40]);
 
 % 3072 pressure signals (MILPE)
 figure(12) 
-for i=1:size(Ym,1) 
-    plot(t,Ym(i,:)); hold on; 
+for i=1:size(Y_MILPE,1) 
+    plot(t,Y_MILPE(i,:)); hold on; 
 end 
 title("case #1 - 3072 pressure signals (MILPE)");
 xlabel("t[s]");
 ylabel("p[pa]");
 ylim([-40,40]);
 
-% force (spatial sum of pressures)
+% 3072 pressure signals (LSQ)
 figure(13) 
+for i=1:size(Y_LSQ,1) 
+    plot(t,Y_LSQ(i,:)); hold on; 
+end 
+title("case #1 - 3072 pressure signals (LSQ)");
+xlabel("t[s]");
+ylabel("p[pa]");
+ylim([-40,40]);
+
+% force (spatial sum of pressures)
+figure(14) 
 plot(t,sum( Y,1)); hold on; % OG
-plot(t,sum(Ym,1)); hold on; % MILPE
+plot(t,sum(Y_MILPE,1)); hold on; % MILPE
+plot(t,sum(Y_LSQ,1)); hold on; % MILPE
 title("case #1 - spatial sum of pressures");
 xlabel("t[s]");
 ylabel("\Sigma p[pa]");
-legend("OG","MILPE");
+legend("OG","MILPE","LSQ");
 
 
 
@@ -123,35 +125,26 @@ load("case2/Y.mat"); % pres
 te    =  20;                    % [s] simulation duration
 dt    =  0.04;                  % [s] time-step
 m     =  floor((te)/dt+1);      % number of snapshots
+t     =  [0:m-1]*dt; % prepare time vector
 
-% time-loop
-for it=1:m
+% input subspace X
+X = [v; a; a.*a; v.*v; v.*a; a.*a.*a; v.*v.*v];  % candidate #5 from Table A1
 
-    % echo
-    if ( it == 1 ) cnt = 20; end % counter
-    if ( mod(it,0.2*m) < 1 ) disp("MILPE......"+cnt+"%"); cnt = cnt+20; end
+Y_MILPE = UyUxP * X;
 
-    % input snapshot X
-    X = [v(it) a(it) a(it)^2 v(it)^2 v(it)*a(it) a(it)^3 v(it)^3]; % candidate #5 from Table A1
 
-    % output snapshot Y
-    Ytmp = UyUxP * X';       % use UyUxP constructed from case #1
 
-    % init Ym at it==1 (Ym: Y_MILPE)
-    if ( it == 1 ) Ym = zeros(size(Ytmp,1),m); end
 
-    % save as time-history
-    Ym(:,it) = Ytmp;
 
-end
+% LSQ
+Y_LSQ   = a_LSQ * X;
+
 
 
 
 
 
 %% Verification 2 - time history comparison for case #2
-
-t = [0:m-1]*dt; % prepare time vector
 
 % 3072 pressure signals (OG)
 figure(21) 
@@ -165,21 +158,32 @@ ylim([-40,40]);
 
 % 3072 pressure signals (MILPE)
 figure(22) 
-for i=1:size(Ym,1) 
-    plot(t,Ym(i,:)); hold on; 
+for i=1:size(Y_MILPE,1) 
+    plot(t,Y_MILPE(i,:)); hold on; 
 end 
 title("case #2 - 3072 pressure signals (MILPE)");
 xlabel("t[s]");
 ylabel("p[pa]");
 ylim([-40,40]);
 
-% force (spatial sum of pressures)
+% 3072 pressure signals (LSQ)
 figure(23) 
+for i=1:size(Y_LSQ,1) 
+    plot(t,Y_LSQ(i,:)); hold on; 
+end 
+title("case #2 - 3072 pressure signals (LSQ)");
+xlabel("t[s]");
+ylabel("p[pa]");
+ylim([-40,40]);
+
+% force (spatial sum of pressures)
+figure(24) 
 plot(t,sum( Y,1)); hold on; % OG
-plot(t,sum(Ym,1)); hold on; % MILPE
+plot(t,sum(Y_MILPE,1)); hold on; % MILPE
+plot(t,sum(Y_LSQ,1)); hold on; % LSQ
 title("case #2 - spatial sum of pressures");
 xlabel("t[s]");
 ylabel("\Sigma p[pa]");
-legend("OG","MILPE");
+legend("OG","MILPE","LSQ");
 
-aaf(2,3,1)
+aaf(2,4,1)
