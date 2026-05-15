@@ -63,13 +63,12 @@ y1_LSQ   = a1    * X;
 
 % time history - x-position
 figure(11)
-plot(t,x1,'c'); hold on;   % OG - x1
-plot(t,x2,'b--'); hold on; % OG - x2
 plot(t,y1,'k'); hold on;   % OG - y
 plot(t,y1_MILPE,'y--');    % MILPE - y
-plot(t,y1_LSQ,'r--');      % MILPE - y
+plot(t,y1_LSQ,'r--');      % LSQ - y
 xlabel('t');
 ylabel('vars');
+legend("OG","MILPE","LSQ")
 
 aaf
 
