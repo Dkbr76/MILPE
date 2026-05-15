@@ -27,14 +27,14 @@ m  = floor((te)/dt+1);      % number of snapshots
 t  = [0:m]*dt;
 
 % input time-history(s)
-x1 = sin( t );              % <- baseline
-x2 = sin( t + 1e-13);       % variant
+x1 = sin(t);                % <- baseline
+x2 = sin(t + 1e-13);        % variant
 
 % input-subspace
-X  =  [x1;x2];
+X  = [x1;x2];
 
 % output-subspace
-Y  =  cos(t);
+Y  = cos(t);
 
 % MILPE
 UyUxP = MILPE(X,Y,0)
@@ -88,3 +88,23 @@ xlabel('t');
 ylabel('vars');
 
 aaf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
