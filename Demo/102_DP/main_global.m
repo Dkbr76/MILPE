@@ -20,7 +20,7 @@ clear all; close all;
 % purpose: data aquisition for the eigenvector extraction
 % reference: Shinbrot et al. Chaos in a double pendulum. Am. J. Phys. 1992, 60, 491–499
 disp("OG DP Sim #1");
-te    =  3.0;                   % [s] simulation duration
+te    =  1e+0;                   % [s] simulation duration
 dt    =  1e-5;                  % [s] time-step
 ic    =  [10 10 0 0];           % initial condition [theta1, theta2, theta1_dot, theta2_dot]
 co    =  [1 1 1 1 9.8];         % DP parameters [L1, L2, m1, m2, g]
@@ -73,6 +73,17 @@ Y2 = [t2dd];
 % MILPE
 U1yU1xP = MILPE(X1,Y1,0); % MILPE low-rank governing equation (Uy*Ux+)
 U2yU2xP = MILPE(X2,Y2,0); % MILPE low-rank governing equation (Uy*Ux+)
+
+
+
+
+
+
+% LSQ
+a1 = L2(X1,Y1);
+a2 = L2(X2,Y2);
+
+
 
 
 
@@ -152,6 +163,8 @@ end
 U1yU1xP
 U2yU2xP
 
+a1
+a2
 
 
 
