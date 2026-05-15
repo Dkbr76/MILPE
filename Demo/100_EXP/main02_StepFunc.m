@@ -19,8 +19,8 @@ clear all; close all;
 
 
 % ctrl
-te = 1e+1;                  % simulation duration
-dt = 1e-6;                  % time-step
+te = 2*pi;                  % simulation duration
+dt = 1e-5;                  % time-step
 m  = floor((te)/dt+1);      % number of snapshots
 
 % time-vector
@@ -34,11 +34,14 @@ x4  = cos(t* 7);
 x5  = cos(t* 9);              
 x6  = cos(t*11);              
 
+% input time-history(s)
+y1  = sign(cos(t));
+
 % input-subspace
 X  =  [ x1; x2; x3; x4; x5; x6 ];
 
 % output-subspace
-Y  =  sign(cos(t));
+Y  =  [ y1 ];
 
 % MILPE
 UyUxP = MILPE(X,Y,0)
@@ -61,7 +64,7 @@ for it=1:m
     if ( mod(it,0.2*m) < 1 ) disp("MILPE......"+cnt+"%"); cnt = cnt+20; end
 
     % input snapshot X
-    X = [  x1(it)  x2(it)  x3(it)  x4(it)  x5(it)  x6(it) ];
+    X = [ x1(it)  x2(it)  x3(it)  x4(it)  x5(it)  x6(it) ];
 
     % output snapshot Y
     Y = UyUxP * X';
@@ -80,9 +83,36 @@ end
 
 
 
+% verification - compare with Analytic DFT result
+
+% pure analytic
+Analytic    =  [ 4/pi -4/(3*pi) 4/(5*pi) -4/(7*pi) 4/(9*pi) -4/(11*pi) ]
+D           =  Analytic - UyUxP
+
+% DFT
+[amp,phs,f] =  DFT(y1,dt);  % exec DFT for y1, frequency might dependent on circumstances
+w = 2*pi*f;                 % wave frequency
+for it=1:m                  % Reconstruction of y1 with DFT result
+    y1_RECON(it) = amp(1)   + amp( 2) * cos( w( 2)*it*dt + phs( 2) ) ... 
+                            + amp( 3) * cos( w( 3)*it*dt + phs( 3) ) ... 
+                            + amp( 4) * cos( w( 4)*it*dt + phs( 4) ) ... 
+                            + amp( 5) * cos( w( 5)*it*dt + phs( 5) ) ... 
+                            + amp( 6) * cos( w( 6)*it*dt + phs( 6) ) ... 
+                            + amp( 7) * cos( w( 7)*it*dt + phs( 7) ) ... 
+                            + amp( 8) * cos( w( 8)*it*dt + phs( 8) ) ... 
+                            + amp( 9) * cos( w( 9)*it*dt + phs( 9) ) ... 
+                            + amp(10) * cos( w(10)*it*dt + phs(10) ) ... 
+                            + amp(11) * cos( w(11)*it*dt + phs(11) ) ... 
+                            + amp(12) * cos( w(12)*it*dt + phs(12) );
+end
 
 
-% time history - x-position
+
+
+
+
+
+% time history 
 figure(11)
 plot(TH0(1,:),TH0(  2,:),'c'); hold on; % OG - x1
 plot(TH0(1,:),TH0(  3,:),'c'); hold on; % OG - x2
@@ -90,8 +120,9 @@ plot(TH0(1,:),TH0(  4,:),'c'); hold on; % OG - x3
 plot(TH0(1,:),TH0(  5,:),'c'); hold on; % OG - x4
 plot(TH0(1,:),TH0(  6,:),'c'); hold on; % OG - x5
 plot(TH0(1,:),TH0(  7,:),'c'); hold on; % OG - x6
-plot(TH0(1,:),TH0(end,:),'k'); hold on; % OG - y
-plot(TH1(1,:),TH1(end,:),'m--');        % MILPE - y
+plot(TH0(1,:),TH0(end,:),'k'); hold on; % OG - y1
+plot(TH1(1,:),TH1(end,:),'k--');        % MILPE - y1
+plot(TH1(1,:),y1_RECON,'m--');            % DFT - y1
 xlabel('t');
 ylabel('vars');
 
